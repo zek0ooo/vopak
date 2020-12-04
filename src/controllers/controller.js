@@ -1,7 +1,9 @@
 const {validateRequest} = require('../validators/requestValidator');
 // const {validateParameters} = require('../validators/parametersValidator');
 const request = (req, res)=>{
-  req.files?validateRequest(req):res.send('no files');
+  if (!validateRequest(req)) {
+    res.send('invalid request');
+  }
   // req.body?validateRequest(req):res.send('wrong terminalName');
   res.send('good test');
   

@@ -1,16 +1,28 @@
-function validateRequest(req) {
-  const fileType = req.files.data.mimetype;
-  const testFileType = fileType === 'text/csv'?'ok':'not ok';
-  
- 
+const validFields = {
+  body: [
+    'terminalName',
+  ],
+  files: [
+    'data',
+  ]
+};
 
-  
-  // const name = req.body.terminalName;
-  // const testTerminalName = name === String?'ok':'not ok'; 
-  return {testFileType};
+function validateRequest(req) {
+  return validateFileParameter(req) && validateTerminalName(req) && validateNoExtraParameters(req);
 }
 
+function validateFileParameter(req) {
+  return req.files !== undefined && req.files.data !== undefined && req.files.data.mimetype === 'text/csv';
+}
+
+function validateTerminalName(req) {
+  return req.body !== undefined && req.body.terminalName !== undefined && (typeof req.body.terminalName === 'string');
+}
+
+function validateNoExtraParameters(req) {
+  return true;
+}
 
 module.exports = { 
   validateRequest
-};   
+};
