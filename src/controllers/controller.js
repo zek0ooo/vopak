@@ -1,12 +1,13 @@
 const {validateRequest} = require('../validators/requestValidator');
 // const {validateParameters} = require('../validators/parametersValidator');
 const request = (req, res)=>{
-  if (!validateRequest(req)) {
-    res.send('invalid request');
+  try {
+    validateRequest(req);
+  } catch (e) {
+    res.status(400).send(e.message);
   }
   // req.body?validateRequest(req):res.send('wrong terminalName');
   res.send('good test');
-  
 };
 
 module.exports = {

@@ -2,7 +2,7 @@
 const {expect} = require('chai');
 const {validateRequest} = require('../../src/validators/requestValidator');
 describe('filetype validate test', ()=>{
-  it('should fail if only CSV file is provided', ()=>{
+  it('should fail if only CSV file is provided', ()=> {
     const req = {
       files : {
         data: {
@@ -11,7 +11,9 @@ describe('filetype validate test', ()=>{
       }
     };
 
-    expect(validateRequest(req)).to.be.false;
+    expect(function() {
+      validateRequest(req);
+    }).to.throw();
   });
 
   it('should fail if only terminalName is provided', ()=>{
@@ -21,25 +23,12 @@ describe('filetype validate test', ()=>{
       }
     };
 
-    expect(validateRequest(req)).to.be.false;
+    expect(function() {
+      validateRequest(req);
+    }).to.throw();
   });
 
-  it('should pass when all mandatory parameters are set', ()=>{
-    const req = {
-      body: {
-        terminalName: 'test',
-      },
-      files : {
-        data: {
-          mimetype:'text/csv'
-        }
-      }
-    };
-
-    expect(validateRequest(req)).to.be.true;
-  });
-
-  it('should pass when all mandatory parameters are set', ()=>{
+  it('should fail when an extra parameter is set', ()=>{
     const req = {
       body: {
         terminalName: 'test',
@@ -52,6 +41,25 @@ describe('filetype validate test', ()=>{
       }
     };
 
-    expect(validateRequest(req)).to.be.true;
+    expect(function() {
+      validateRequest(req);
+    }).to.throw();
+  });
+
+  it('should pass when all mandatory parameters are set', ()=>{
+    const req = {
+      body: {
+        terminalName: 'test',
+      },
+      files : {
+        data: {
+          mimetype:'text/csv',
+        }
+      }
+    };
+
+    expect(function() {
+      validateRequest(req);
+    }).to.not.throw();
   });
 });

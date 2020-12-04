@@ -1,25 +1,33 @@
-const validFields = {
-  body: [
-    'terminalName',
-  ],
-  files: [
-    'data',
-  ]
-};
+// const validFields = {
+//   body: [
+//     'terminalName',
+//   ],
+//   files: [
+//     'data',
+//   ]
+// };
 
 function validateRequest(req) {
-  return validateFileParameter(req) && validateTerminalName(req) && validateNoExtraParameters(req);
+  validateFileParameter(req);
+  validateTerminalName(req);
+  validateNoExtraParameters(req);
+
+  return true;
 }
 
 function validateFileParameter(req) {
-  return req.files !== undefined && req.files.data !== undefined && req.files.data.mimetype === 'text/csv';
+  if (req.files === undefined || req.files.data === undefined || req.files.data.mimetype !== 'text/csv') {
+    throw new Error('request files.data invalid or missing. Should be a CSV file.');
+  }
 }
 
 function validateTerminalName(req) {
-  return req.body !== undefined && req.body.terminalName !== undefined && (typeof req.body.terminalName === 'string');
+  if (req.body === undefined || req.body.terminalName === undefined || (typeof req.body.terminalName !== 'string')) {
+    throw new Error('request body.terminalName invalid or missing. Should be a string.');
+  }
 }
 
-function validateNoExtraParameters(req) {
+function validateNoExtraParameters() {
   return true;
 }
 
