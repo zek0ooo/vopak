@@ -2,7 +2,7 @@
 //   body: [
 //     'terminalName',
 //   ],
-//   files: [
+//   files: [  
 //     'data',
 //   ]
 // };
@@ -16,7 +16,7 @@ function validateRequest(req) {
 }
 
 function validateFileParameter(req) {
-  if (req.files === undefined || req.files.data === undefined || req.files.data.mimetype !== 'text/csv') {
+  if (req.files === undefined || req.files === null || req.files.data === undefined || req.files.data.mimetype !== 'text/csv') {
     throw new Error('request files.data invalid or missing. Should be a CSV file.');
   }
 }
@@ -27,7 +27,10 @@ function validateTerminalName(req) {
   }
 }
 
-function validateNoExtraParameters() {
+function validateNoExtraParameters(req) {
+  if ( Object.entries(req.body).length !== 1 ) { 
+    throw new Error('request body have extra parameter ');
+  }
   return true;
 }
 

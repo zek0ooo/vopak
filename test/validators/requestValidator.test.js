@@ -34,7 +34,7 @@ describe('filetype validate test', ()=>{
         terminalName: 'test',
         extraParam: 'hello',
       },
-      files : {
+      files : { 
         data: {
           mimetype:'text/csv'
         }
