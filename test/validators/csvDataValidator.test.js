@@ -6,7 +6,7 @@ describe('csvData validate test', ()=>{
     const req = {
       files : {
         data : {
-          data : 'test'
+          data : test
         }
       }
     };
