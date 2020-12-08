@@ -1,4 +1,3 @@
-// const { assert } = require('chai');
 const {expect} = require('chai');
 const {validateRequest} = require('../../src/validators/requestValidator');
 describe('filetype validate test', ()=>{

@@ -1,12 +1,3 @@
-// const validFields = {
-//   body: [
-//     'terminalName',
-//   ],
-//   files: [  
-//     'data',
-//   ]
-// };
-
 function validateRequest(req) {
   validateFileParameter(req);
   validateTerminalName(req);
