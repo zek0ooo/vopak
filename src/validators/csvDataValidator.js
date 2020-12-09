@@ -1,37 +1,16 @@
-const csvTojson = require('csvtojson');
-function validateCsvData(req) { 
-  bufferTostring(req); 
-  return true; 
-}
-function bufferTostring(req) { 
-  const string = req.files.data.data.toString();
-  if ((typeof string !== 'string') ) {
-    throw new Error('converting buffer to string failde.');
-  } 
-  ss(string);
-}   
-function ss(string) {
-  csvTojson().fromString(string)
-    .then(res=>{
-      // console.log(res, 'res');
-      convert(res);
-    })
-    .catch(err=>{
-      console.log(err);  
-    });
-  const convert=(res)=>{
-    if ( !res ) {
-      throw new Error('converting string to json object failde .');
-    } else {
-      // console.log(res)
+function validateCsvData(inputData) { 
+  inputData.forEach(element => {
+    if (!element.id || !element.age || isNaN(Number(element.id)) || isNaN(Number(element.age)) || element.age < 18 || element.age >= 100)  {
+      throw new Error('inputData.id or inputData.age invalid or missing. Should be a number.');
     }
-    console.log(...res);
-    mm(res);
-  };
+    if (!element.name || typeof(element.name) !=='string') {
+      throw new Error('inputData.name invalid or missing. Should be a string.');
+    }
+    if (element.website && !element.website.match(/https?/) ) {
+      throw new Error('inputData.website invalid or missing. Should contens a valid format.');
+    } 
+  }); 
 }
-function mm(res) {
-  console.log(res);
-}
-module.exports = {     
+module.exports = {          
   validateCsvData
-};
+}; 

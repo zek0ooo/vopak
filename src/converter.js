@@ -11,8 +11,8 @@ function convert(req) {
     }
     result.push(obj);
   }
-}
-
+  return result;
+} 
 module.exports = {
-  convert 
+  convert
 };
