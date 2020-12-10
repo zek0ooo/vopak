@@ -1,11 +1,11 @@
 const {validateRequest} = require('../validators/requestValidator');
-const {validateCsvData} = require('../validators/csvDataValidator');
+const {validate} = require('../validators/inputValidator');
 const {convert} = require('../../src/converter');
 const request = (req, res)=>{
   try {
     validateRequest(req);
     const inputData = convert(req);
-    validateCsvData(inputData);
+    validate(inputData);
   } catch (e) {
     res.status(400).send(e.message);
   }
