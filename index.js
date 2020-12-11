@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const router = require('./src/router/router');
 const fileupload = require('express-fileupload');
+require('./src/mongodb');
 app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(fileupload());

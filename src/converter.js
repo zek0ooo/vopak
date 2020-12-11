@@ -3,7 +3,12 @@ function convert(req) {
   const lines = string.split("\r\n");   
   const headers = lines[0].split(",");
   const arr = [];
-  const result = [];
+  const arr2=[];
+  const result = {
+    terminalName:req.body.terminalName,
+    data:arr2
+  };
+  // console.log(req.body)
   for (var i=1;i<lines.length;i++) {
     const obj = {};
     const dataLine = lines[i].split(",");
@@ -13,14 +18,9 @@ function convert(req) {
     arr.push(obj);  
   }
   arr.forEach(element=>{
-    // using parseInt(element.id) Ex 20.2 => 20  ,  using Number(element.id) Ex 20.2 => isSafeInteger(false)
-
-    //  element.id= parseInt(element.id);
-    //  element.age= parseInt(element.age);
-
-    element.id= Number(element.id);
-    element.age= Number(element.age);
-    result.push(element);
+    element.id = Number(element.id);
+    element.age = Number(element.age);
+    arr2.push(element);
   });
   return result;
 } 
