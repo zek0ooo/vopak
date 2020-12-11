@@ -8,7 +8,6 @@ function convert(req) {
     terminalName:req.body.terminalName,
     data:arr2
   };
-  // console.log(req.body)
   for (var i=1;i<lines.length;i++) {
     const obj = {};
     const dataLine = lines[i].split(",");
