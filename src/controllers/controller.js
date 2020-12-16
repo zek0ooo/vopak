@@ -2,7 +2,6 @@ const {validateRequest} = require('../validators/requestValidator');
 const {validate} = require('../validators/inputValidator');
 const {convert} = require('../../src/converter');
 const {Device} = require('../models/schema');
-const {jsonStructure} = require('../DeviceConfigfile');
 const request = (req, res)=>{
   try {
     validateRequest(req);

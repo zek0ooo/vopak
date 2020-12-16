@@ -2,11 +2,11 @@ const mongoose = require('mongoose');
 const dataSchema = new mongoose.Schema({
   terminalName:{
     type:String
-    ,required:true
+    , required:true
   },
   data:{
-    required:true,
-    type:Array
+    required:true
+    , type:Array
   }
 }, {timestamps: true});
 const Device = mongoose.model('device', dataSchema );
