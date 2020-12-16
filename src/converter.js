@@ -1,19 +1,11 @@
 function convert(req) {
   const string = req.files.data.data.toString();
   const lines = string.split("\r\n");   
-  const firstLine = lines[0].split(",");
+  const firstLine = lines[0].split(',');
   const headers = [];
-  firstLine.forEach(val => {
-    const arr = val.split(' ');
-    let [name] = arr;
-    for (let i = 0; i < arr.length; i++) {
-      if (name !== arr[i]) {
-        name +='_'+ arr[i];
-      }
-    }
-    headers.push(name);
-  });
-
+  for (let i = 0; i < firstLine.length; i++) {
+    headers.push(firstLine[i].replace(/ /g, '_'));
+  }
   const jsonArray = [];
   const result = {
     terminalName:req.body.terminalName,
