@@ -23,20 +23,18 @@ function convert(req) {
   for (let i = 1; i < lines.length; i++) {
     const obj = {};
     const dataLine = lines[i].split(",");
-    if(dataLine.length !== headers.length){
-      errors.push('error on line '+(i+1)+' expected '+headers.length+' but got '+dataLine.length)
-      continue
+    if (dataLine.length !== headers.length) {
+      errors.push('error on line '+(i+1)+' expected '+headers.length+' but got '+dataLine.length);
+      continue;
     }
     for (let j = 0; j < headers.length; j++) {
       obj[headers[j]] = dataLine[j];
     }
     jsonArray.push(obj);  
-  }
-  console.log(errors)  
+  } 
   if (errors.length > 0) {
-    throw new Error (errors)
+    throw new Error (errors);
   }
-  
   return result;
 } 
 module.exports = {
