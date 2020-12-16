@@ -1,24 +1,12 @@
 function convert(req) {
   const string = req.files.data.data.toString();
   const lines = string.split("\r\n");   
-  const firstLine = lines[0].split(",");
+  const firstLine = lines[0].split(',');
   const headers = [];
-  firstLine.forEach(val => {
-    const arr = val.split(' ');
-    let [name] = arr;
-    for (let i = 0; i < arr.length; i++) {
-      if (name !== arr[i]) {
-        name +='_'+ arr[i];
-      }
-    }
-    headers.push(name);
-  });
-
+  for (let i = 0; i < firstLine.length; i++) {
+    headers.push(firstLine[i].replace(/ /g, '_'));
+  }
   const jsonArray = [];
-  const result = {
-    terminalName:req.body.terminalName,
-    data:jsonArray
-  };
   const errors= [];
   for (let i = 1; i < lines.length; i++) {
     const obj = {};
@@ -35,7 +23,7 @@ function convert(req) {
   if (errors.length > 0) {
     throw new Error (errors);
   }
-  return result;
+  return jsonArray;
 } 
 module.exports = {
   convert

@@ -6,7 +6,7 @@ const dataSchema = new mongoose.Schema({
   },
   data:{
     required:true,
-    type:Array
+    type:Object
   }
 }, {timestamps: true});
 const Device = mongoose.model('device', dataSchema );

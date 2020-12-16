@@ -7,12 +7,12 @@ const request = (req, res)=>{
   try {
     validateRequest(req);
     const inputData = convert(req);
-    validate(inputData.data);
-    jsonStructure(inputData.data);
-    const device = new Device(inputData);
+    validate(inputData);
+    const ConfigFile = jsonStructure(inputData);
+    const device = new Device({terminalName :req.body.terminalName, data : ConfigFile});
     device.save()
       .then(result => {
-        res.status(201).send(result);
+        res.status(201).send(result);  
       })
       .catch( err => {
         console.log(err); 
@@ -20,6 +20,7 @@ const request = (req, res)=>{
   } catch (e) {
     res.status(400).send(e.message);  
   }
+  // res.send('ttt')
 };
 
 module.exports = {
