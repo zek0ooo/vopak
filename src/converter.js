@@ -15,10 +15,6 @@ function convert(req) {
   });
 
   const jsonArray = [];
-  const result = {
-    terminalName:req.body.terminalName,
-    data:jsonArray
-  };
   const errors= [];
   for (let i = 1; i < lines.length; i++) {
     const obj = {};
@@ -32,12 +28,7 @@ function convert(req) {
     }
     jsonArray.push(obj);  
   }
-  jsonArray.forEach(element=>{
-    element.id = Number(element.id);
-    element.age = Number(element.age);
-    result.data.push(element);
-  });
-  return result;
+  return jsonArray;
 } 
 module.exports = {
   convert

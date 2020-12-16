@@ -11,11 +11,8 @@ const request = (req, res)=>{
     const device = new Device(inputData);
     device.save()
       .then(result => {
-        const obj = {
-          terminalName : result.terminalName,
-          data : result.data
-        };
-        res.status(201).send(obj);
+        console.log(result);
+        res.status(201).send(result);
       })
       .catch( err => {
         console.log(err);
@@ -23,7 +20,6 @@ const request = (req, res)=>{
   } catch (e) {
     res.status(400).send(e.message);  
   }
-  res.send('inputData')
 };
 
 module.exports = {
