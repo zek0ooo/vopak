@@ -2,11 +2,10 @@ function convert(req) {
   const string = req.files.data.data.toString();
   const lines = string.split("\r\n");   
   const headers = lines[0].split(",");
-  const arr = [];
-  const arr2=[];
+  const jsonArray = [];
   const result = {
     terminalName:req.body.terminalName,
-    data:arr2
+    data:[]
   };
   for (var i=1;i<lines.length;i++) {
     const obj = {};
@@ -14,12 +13,12 @@ function convert(req) {
     for (var j=0;j<headers.length;j++) {
       obj[headers[j]] = dataLine[j];
     }
-    arr.push(obj);  
+    jsonArray.push(obj);  
   }
-  arr.forEach(element=>{
+  jsonArray.forEach(element=>{
     element.id = Number(element.id);
     element.age = Number(element.age);
-    arr2.push(element);
+    result.data.push(element);
   });
   return result;
 } 

@@ -14,7 +14,7 @@ const request = (req, res)=>{
           terminalName : result.terminalName,
           data : result.data
         };
-        res.status(200).send(obj);
+        res.status(201).send(obj);
       })
       .catch( err => {
         console.log(err);
