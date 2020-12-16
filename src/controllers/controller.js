@@ -11,7 +11,6 @@ const request = (req, res)=>{
     const device = new Device(inputData);
     device.save()
       .then(result => {
-        console.log(result);
         res.status(201).send(result);
       })
       .catch( err => {

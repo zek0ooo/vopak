@@ -6,7 +6,7 @@ function validate(inputData) {
     // if (!element.MeasurementMethod || !element.TagUnitOfMeasure || !element.MeasurementSpecification || !element.External_line ) {
     //   throw new Error('inputData has invalid or missing Optional Column.');
     // }
-  }); 
+  });  
   
 }    
 module.exports = {                 
