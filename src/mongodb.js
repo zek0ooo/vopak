@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 require('dotenv').config();
-const {USER1, PASSWORD, DBNAME} = process.env;
-const dbURL = 'mongodb+srv://'+USER1+':'+PASSWORD+'@'+DBNAME+'.ozt4p.azure.mongodb.net/device-config?retryWrites=true&w=majority';
+const {MONGO_USERNAME, MONGO_PASSWORD, DBNAME} = process.env;
+const dbURL = 'mongodb+srv://'+MONGO_USERNAME+':'+MONGO_PASSWORD+'@'+DBNAME+'.ozt4p.azure.mongodb.net/device-config?retryWrites=true&w=majority';
 
 mongoose.connect(dbURL, {useNewUrlParser:true, useUnifiedTopology: true})
   .then( () => {
