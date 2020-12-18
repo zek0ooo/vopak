@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const dataSchema = new mongoose.Schema({
   terminalName:{
-    type:String,
-    required:true
+    type:String
+    , required:true
   },
   data:{
     required:true,
