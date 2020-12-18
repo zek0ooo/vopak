@@ -1,32 +1,37 @@
-function jsonStructure(inputData){
-    const device = [];
-    inputData.forEach(element=>{
-        device.push({
-            DeviceName : element.DCS_Controller
-            , DeviceLocation : element.OPC_Tag
-            , DeviceId : element.External_line
-            , DeviceType : element.DeviceType
-            , EM_FLOC : element.EMFLOC
-            , TerminalAssetCode : element.CM_FLOC
-            , GlobalAssetID : ''
-            , Tags : [
-              {
-                TagName : ''
-                , TagType : ''
-                , MeasurementType : element.Type_of_measurement
-                , CM_FLOC : element.CM_FLOC
-                , GlobalAssetID : ''
-                , MeasurementMethod : element.MeasurementMethod
-                , MeasurementSpecification : element.MeasurementSpecification
-                , TagUnitOfMeasure : element.TagUnitOfMeasure
-                , MeasurementUnitOfMeasure : ''
-              }
-            ]
+function jsonStructure(inputData) {
+  const device = [];
+  inputData.forEach(element=> {
+    device.push({
+      DeviceName : element.External_line,
+      DeviceLocation :'',
+      DeviceId : element.EMFLOC,
+      DeviceType : element.DeviceType,
+      EM_FLOC : element.EMFLOC,
+      // TerminalAssetCode : '',
+      // GlobalAssetID : '',
+      Tags:[]
+    });
+    device.forEach(val=>{
+      if (val.DeviceType==element.DeviceType) {
+        val.Tags.push({
+          TagName : element.DCS_Controller +'!'+ element.OPC_Tag,
+          TagType : element.Type_of_measurement,                   
+          MeasurementType : element.Type_of_measurement,           
+          TagUnitOfMeasure :element.TagUnitOfMeasure,             
+          MeasurementUnitOfMeasure : element.TagUnitOfMeasure,    
+          MeasurementDescription : element.MeasurementSpecification,
+          // CM_FLOC : element.CM_FLOC,
+          // GlobalAssetID : '',
+          // MeasurementMethod : '',
+          // MeasurementSpecification : '',
+          // MeasurementUnitOfMeasure : '',
         });
-    })
-    return device;
-}; 
+      }
+    });
+  });
+  return device;
+}
 
 module.exports = {
   jsonStructure
-}
+};

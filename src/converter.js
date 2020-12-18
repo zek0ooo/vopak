@@ -1,5 +1,5 @@
 function convert(req) {
-  const string = req.files.data.data.toString();
+  const string = (req.files.data.data.toString()).trim();
   const lines = string.split("\r\n");   
   const firstLine = lines[0].split(',');
   const headers = [];
