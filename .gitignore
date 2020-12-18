@@ -1,5 +1,4 @@
 .idea
 .nyc_output
 coverage
-.env
 node_modules
