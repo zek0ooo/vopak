@@ -1,27 +1,32 @@
 function convert(req) {
   const string = req.files.data.data.toString();
   const lines = string.split("\r\n");   
-  const headers = lines[0].split(",");
-  const arr = [];
-  const result = [];
-  for (var i=1;i<lines.length;i++) {
+  const firstLine = lines[0].split(',');
+  const headers = [];
+  for (let i = 0; i < firstLine.length; i++) {
+    headers.push(firstLine[i].replace(/ /g, '_'));
+  }
+  const jsonArray = [];
+  const result = {
+    terminalName:req.body.terminalName,
+    data:jsonArray
+  };
+  const errors= [];
+  for (let i = 1; i < lines.length; i++) {
     const obj = {};
     const dataLine = lines[i].split(",");
-    for (var j=0;j<headers.length;j++) {
+    if (dataLine.length !== headers.length) {
+      errors.push('error on line '+(i+1)+' expected '+headers.length+' but got '+dataLine.length);
+      continue;
+    }
+    for (let j = 0; j < headers.length; j++) {
       obj[headers[j]] = dataLine[j];
     }
-    arr.push(obj);  
+    jsonArray.push(obj);  
+  } 
+  if (errors.length > 0) {
+    throw new Error (errors);
   }
-  arr.forEach(element=>{
-    // using parseInt(element.id) Ex 20.2 => 20  ,  using Number(element.id) Ex 20.2 => isSafeInteger(false)
-
-    //  element.id= parseInt(element.id);
-    //  element.age= parseInt(element.age);
-
-    element.id= Number(element.id);
-    element.age= Number(element.age);
-    result.push(element);
-  });
   return result;
 } 
 module.exports = {
