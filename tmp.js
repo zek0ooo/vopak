@@ -53,13 +53,13 @@ function createDevice(data) {
 }
 
 function createTag(data) {
-  const device = devices.find(device => device.DeviceId === data.DeviceId) || createDevice(data);
+  devices.find(device => device.DeviceId === data.DeviceId) || createDevice(data);
 
   const tag = {};
   tag.TagId = data.TagId;
   tag.TagType = data.TagType;
 
-  device.Tags.push(tag);
+  // device.Tags.push(tag);
 }
 
 main();

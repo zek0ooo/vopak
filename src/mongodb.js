@@ -4,7 +4,7 @@ const {MONGO_USERNAME, MONGO_PASSWORD, MONGO_DB_NAME, MONGO_HOST} = process.env;
 const dbURL = 'mongodb+srv://'+MONGO_USERNAME+':'+MONGO_PASSWORD+'@'+MONGO_HOST+'/'+MONGO_DB_NAME+'?retryWrites=true&w=majority';
 
 mongoose.connect(dbURL, {useNewUrlParser:true, useUnifiedTopology: true})
-  .then( () => {
+  .then( ( ) => {
     console.log('Connected to db');
   })
   .catch((err)=>{
