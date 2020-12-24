@@ -1,7 +1,7 @@
 // const { validate } = require("./validators/inputValidator");
 
 function convert(string) {
-  const lines = string.split("\r\n");   
+  const lines = string.split("\n");
   const firstLine = lines[0].split(',');
   const headers = [];
   
@@ -18,10 +18,9 @@ function convert(string) {
       errors.push(e);
     }
   } 
-  
-  console.log(errors);
+
   if (errors.length > 0) {
-    throw new Error(errors.toString());
+    throw new Error(errors.join(", "));
   }
 
   return jsonArray;
