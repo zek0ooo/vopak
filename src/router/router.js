@@ -1,6 +1,8 @@
 const express = require('express');
-const router = express.Router();
 const {request} = require('../controllers/controller');
+const router = express.Router();
 router.post('/device-config', request);
 
-module.exports = router; 
+module.exports = {
+  router  
+}; 
