@@ -1,6 +1,6 @@
 const {expect} = require('chai');
 
-const {convert, test, sendError, validateRow} = require('../src/converter');
+const {convert, validateRow} = require('../src/converter');
 
 
 describe('converter test', ()=>{
@@ -14,21 +14,24 @@ describe('converter test', ()=>{
     
   });
   it('setting headers', () => {
-    expect(new convert(this.data.string)).is.an('array'); 
-    
+    expect(convert(this.data.string)).is.an('array');
   });
-  it('create error', () => {
-    expect(new test(this.data.headers, this.data.row, 1)).to.be.a('string'); 
-    
-  });
+  // it('create error', () => {
+  //   expect(new test(this.data.headers, this.data.row, 1)).to.be.a('string');
+  //
+  // });
 
-  it('send error', () => {
-    expect(new sendError(this.data.errors)).to.throw(); 
-    
-  });
+  // it('send error', () => {
+  //   expect(new sendError(this.data.errors)).to.throw();
+  //
+  // });it('send error', () => {
+  //   expect(new sendError(this.data.errors)).to.throw();
+  //
+  // });
   it('send errorrrrrrrrrr', () => {
-    expect(new validateRow(this.data.headers, this.data.row, 1).to.throw(); 
-    
+    expect(function() {
+      validateRow([], ['test', 'test2'], 1);
+    }).to.throw();
   });
 });
 

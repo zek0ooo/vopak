@@ -11,34 +11,34 @@ function convert(string) {
   const jsonArray = [];
   const errors = [];
   for (let i = 1; i < lines.length; i++) {
-    const obj = {};
-    const dataLine = lines[i].split(",");
-    // let error = validateRow(dataLine, headers, i);
-    // validateRow(dataLine, headers, i)?errors.push(error):console.log(error)
-    // validateRow(dataLine, headers, i)?console.log(validateRow(dataLine, headers, i)):console.log(error)
-    // console.log(errors)
-    errors.push(validateRow(dataLine, headers, i))
-    
-    for (let j = 0; j < headers.length; j++) {
-      obj[headers[j]] = dataLine[j];
+    try {
+      const dataLine = lines[i].split(",");
+      jsonArray.push(validateRow(dataLine, headers, i));
+    } catch (e) {
+      errors.push(e);
     }
-    jsonArray.push(obj);  
-    // return errors
   } 
   
-  console.log(errors)
-  if (errors.length > 0 && errors !==undefined) {
-    throw new Error (errors);
+  console.log(errors);
+  if (errors.length > 0) {
+    throw new Error(errors.toString());
   }
+
   return jsonArray;
 } 
 
 function validateRow(dataLine, headers, i) {
-  let error;
+  const obj = {};
+
   if (dataLine.length !== headers.length) {
-    error =  'error on line '+(i+1)+' expected '+headers.length+' but got '+dataLine.length;
+    throw new Error('error on line '+(i+1)+' expected '+headers.length+' but got '+dataLine.length);
   }
-  return error
+
+  for (let j = 0; j < headers.length; j++) {
+    obj[headers[j]] = dataLine[j];
+  }
+
+  return obj;
 }
 
 
