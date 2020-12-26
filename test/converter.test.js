@@ -1,5 +1,5 @@
 const {expect} = require('chai');
-const {convert, validateRow} = require('../src/converter');
+const {convert} = require('../src/converter');
 
 describe('converter test', () => {
   it('should pass with all correct data', () => {
@@ -12,12 +12,6 @@ describe('converter test', () => {
     expect(convert(input.join("\r\n"))).is.an('array');
   });
 
-  it('should throw an error when data is wrong', () => {
-    expect(function () {
-      validateRow([], ['test', 'test2'], 1);
-    }).to.throw();
-  });
-
   it('should catch two errors when data is incorrect', () => {
     const input = [
       "header1,header2,header3",
@@ -27,7 +21,7 @@ describe('converter test', () => {
     ];
 
     expect(function () {
-      convert(input.join("\n"));
+      convert(input.join("\r\n"));
     }).to.throw("Error: error on line 2 expected 3 but got 1, Error: error on line 3 expected 3 but got 2");
   });
 });

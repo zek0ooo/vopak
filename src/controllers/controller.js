@@ -4,17 +4,18 @@ const {convert} = require('../../src/converter');
 const {Device} = require('../models/schema');
 const {jsonStructure} = require('../DeviceConfigfile');
 
-const request = (req, res)=>{
-  
+const post = (req, res) => {
   try {
     validateRequest(req);
     const inputData = convert(req.files.data.data.toString().trim());
     validate(inputData);
-    const ConfigFile = jsonStructure(inputData);
+    const ConfigFile = jsonStructure({inputData, terminalName : req.body.terminalName});
     const device = new Device({terminalName :req.body.terminalName, data : ConfigFile});
     device.save()
       .then(result => {
         res.status(201).send(result);  
+        // console.log(res.socket._httpMessage.req.res.statusCode)
+        // console.log(res.socket._httpMessage.req.statusCode)
       })
       .catch( err => {
         console.log(err); 
@@ -23,8 +24,7 @@ const request = (req, res)=>{
     res.status(400).send(e.message);  
   }
 };
-
 module.exports = {
-  request
+  post
 };
     
