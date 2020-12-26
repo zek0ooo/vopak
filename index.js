@@ -8,11 +8,10 @@ const {router} = require('./src/router/router');
 const fileupload = require('express-fileupload');
 const {API_PORT, API_HOST} = process.env;
 app.use(express.json());
+app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 app.use(fileupload());
 app.use(router);
 app.listen(API_PORT, API_HOST, ()=>{
   console.log('Server is on');  
-  
 });
-  

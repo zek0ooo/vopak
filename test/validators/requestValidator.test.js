@@ -4,8 +4,8 @@ describe('filetype validate test', ()=>{
   it('should fail if only CSV file is provided', ()=> {
     const req = {
       files : {
-        data: {
-          mimetype:'text/csv'
+        data : {
+          mimetype : 'text/csv'
         }
       }
     };
