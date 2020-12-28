@@ -13,6 +13,4 @@ app.use(fileupload());
 app.use(router);
 app.listen(API_PORT, API_HOST, ()=>{
   console.log('Server is on');  
-  
 });
-  
