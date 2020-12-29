@@ -46,13 +46,9 @@ const postUser = (req, res)=>{
     .then(result => {
       res.status(201).send(result);
     })
-    .catch( err => {
-      // console.log(err);
-      res.status(400).send(handelErrors(err));
-    });
   } catch(e) {
-    console.log(e);
-    res.status(400).send(e.message);
+    // console.log(e);
+    res.status(400).send(handelErrors(e));
   }
 }; 
 
