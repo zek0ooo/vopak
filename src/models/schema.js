@@ -15,9 +15,9 @@ const userSchema = new mongoose.Schema({
   email : {
     type : String,
     required : [true, ' please enter email'],
-    unique : false,
+    // unique : false,
     lowercase : true,
-    validate : [ val => {return val.includes('@'|| 'gmail') }, 'please enter valid email'],
+    validate : [ val => {return val.includes('@') }, 'please enter valid email'],
 
     // phone: {
     //   type: String,
