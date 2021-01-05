@@ -1,8 +1,9 @@
 const {validateRequest} = require('../validators/requestValidator');
 const {validate} = require('../validators/inputValidator');
 const {convert} = require('../../src/converter');
-const {Device, User} = require('../models/schema');
+const {Device} = require('../models/schema');
 const {jsonStructure} = require('../DeviceConfigfile');
+
 const post = async (req, res)=>{
   try {
     validateRequest(req);
@@ -18,36 +19,33 @@ const post = async (req, res)=>{
   }
 };
 
-const get = (req, res) => {
+const get = async (req, res) => {
   try {
-    Device.find()
-      .then(result => {
-        res.send(result);
-      });
-  } catch (e) {
-    res.status(400).send(e.message);
-  }
-};
-
-const postUser = (req, res)=>{
-  try {
-    const user = new User(req.body);
-    user.save()
-      .then(result => {
-        res.status(201).send(result);
-      });
+    const result = await Device.find();
+    res.send(result);
   } catch (e) {
     res.status(400).send(handelErrors(e));
   }
-}; 
+};
 
-
-
+const getOneDevice = async (req, res)=>{
+  try {
+    const result = await Device.findOne({
+      _id:req.params.id
+    });
+    if (result === null) {
+      throw new Error('the device-config does not exist.');
+    }
+    res.send(result);
+  } catch (e) {
+    res.status(400).send(handelErrors(e));
+  }
+};
 
 module.exports = {
   post,
   get,
-  postUser
+  getOneDevice
 };
     
 function handelErrors(e) {
