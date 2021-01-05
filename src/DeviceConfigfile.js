@@ -33,7 +33,6 @@ function jsonStructure(convertedData) {
     // tag.MeasurementUnitOfMeasure = '';
     device.Tags.push(tag);
   }
-  // console.log(devices)
   return devices;
 }
 

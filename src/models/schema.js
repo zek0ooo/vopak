@@ -17,7 +17,9 @@ const userSchema = new mongoose.Schema({
     required : [true, ' please enter email'],
     // unique : false,
     lowercase : true,
-    validate : [ val => {return val.includes('@') }, 'please enter valid email'],
+    validate : [ val => {
+      return val.includes('@');
+    }, 'please enter valid email'],
 
     // phone: {
     //   type: String,
@@ -44,7 +46,7 @@ const userSchema = new mongoose.Schema({
   }
 }, {timestamps: true});
 
-const User = mongoose.model('user', userSchema)
+const User = mongoose.model('user', userSchema);
 
 
 module.exports = {
