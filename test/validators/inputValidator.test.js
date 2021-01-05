@@ -15,9 +15,6 @@ describe('input validator test', ()=>{
     ];
     const stub = sinon.stub(validate);
     stub(inputData);
-    // expect(function() {
-    //   stub(inputData);
-    // }).to.throw();
   });
 
   it('it must fail because its missing a mandatory column', ()=> {

@@ -29,11 +29,9 @@ function validateRow(dataLine, headers, i) {
   if (dataLine.length !== headers.length) {
     throw new Error('error on line '+(i+1)+' expected '+headers.length+' but got '+dataLine.length);
   }
-
   for (let j = 0; j < headers.length; j++) {
     obj[headers[j]] = dataLine[j];
   }
-  
   return obj;
 }
 
