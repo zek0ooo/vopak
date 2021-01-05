@@ -1,7 +1,7 @@
 const {validateRequest} = require('../validators/requestValidator');
 const {validate} = require('../validators/inputValidator');
 const {convert} = require('../../src/converter');
-const {Device, User} = require('../models/schema');
+const {Device} = require('../models/schema');
 const {jsonStructure} = require('../DeviceConfigfile');
 const post = async (req, res)=>{
   try {
@@ -29,25 +29,9 @@ const get = (req, res) => {
   }
 };
 
-const postUser = (req, res)=>{
-  try {
-    const user = new User(req.body);
-    user.save()
-      .then(result => {
-        res.status(201).send(result);
-      });
-  } catch (e) {
-    res.status(400).send(handelErrors(e));
-  }
-}; 
-
-
-
-
 module.exports = {
   post,
-  get,
-  postUser
+  get
 };
     
 function handelErrors(e) {
