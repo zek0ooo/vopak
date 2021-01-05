@@ -3,7 +3,7 @@ const {validate} = require('../validators/inputValidator');
 const {convert} = require('../../src/converter');
 const {Device, User} = require('../models/schema');
 const {jsonStructure} = require('../DeviceConfigfile');
-const post = (req, res)=>{
+const post = async (req, res)=>{
   try {
     validateRequest(req);
     const inputData = convert(req.files.data.data.toString().trim());
@@ -11,13 +11,8 @@ const post = (req, res)=>{
     const terminalName = req.body.terminalName.trim();
     const ConfigFile = jsonStructure({inputData, terminalName : terminalName});
     const device = new Device({terminalName : terminalName, data : ConfigFile});
-    device.save()
-      .then(result => {
-        res.status(201).send(result);  
-      })
-      // .catch( e => {
-      //   res.status(400).send(handelErrors(e));  
-      // })
+    let result = await device.save();
+    res.status(201).send(result);  
   }  
   catch (e) {
     res.status(400).send(handelErrors(e));  
