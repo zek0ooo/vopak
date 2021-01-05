@@ -15,10 +15,11 @@ const post = (req, res)=>{
       .then(result => {
         res.status(201).send(result);  
       })
-      .catch( e => {
-        res.status(400).send(handelErrors(e));  
-      });
-  } catch (e) {
+      // .catch( e => {
+      //   res.status(400).send(handelErrors(e));  
+      // })
+  }  
+  catch (e) {
     res.status(400).send(handelErrors(e));  
   }
 };
