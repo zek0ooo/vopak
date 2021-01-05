@@ -11,10 +11,9 @@ const post = async (req, res)=>{
     const terminalName = req.body.terminalName.trim();
     const ConfigFile = jsonStructure({inputData, terminalName : terminalName});
     const device = new Device({terminalName : terminalName, data : ConfigFile});
-    let result = await device.save();
+    const result = await device.save();
     res.status(201).send(result);  
-  }  
-  catch (e) {
+  }  catch (e) {
     res.status(400).send(handelErrors(e));  
   }
 };
@@ -53,8 +52,12 @@ module.exports = {
     
 function handelErrors(e) {
   let err = '';
-  Object.values(e.errors).forEach(({properties})=>{
-    err =  properties.message;
-  });
+  if (e.errors) {
+    Object.values(e.errors).forEach(({properties})=>{
+      err =  properties.message;
+    });
+  } else { 
+    err = e.message;
+  }
   return err;
 }
