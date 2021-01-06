@@ -15,16 +15,16 @@ const post = async (req, res)=>{
     const result = await device.save();
     res.status(201).send(result);  
   }  catch (e) {
-    res.status(400).send(handelErrors(e));  
+    res.status(400).send(handleErrors(e));
   }
 };
 
-const get = async (req, res) => {
+const getDevices = async (req, res) => {
   try {
     const result = await Device.find();
     res.send(result);
   } catch (e) {
-    res.status(400).send(handelErrors(e));
+    res.status(400).send(handleErrors(e));
   }
 };
 
@@ -38,11 +38,11 @@ const getOneDevice = async (req, res)=>{
     }
     res.send(result);
   } catch (e) {
-    res.status(400).send(handelErrors(e));
+    res.status(400).send(handleErrors(e));
   }
 };
 
-function handelErrors(e) {
+function handleErrors(e) {
   let err = '';
   if (e.errors) {
     Object.values(e.errors).forEach(({properties})=>{
@@ -56,6 +56,6 @@ function handelErrors(e) {
 
 module.exports = {
   post,
-  get,
+  getDevices,
   getOneDevice
 };
