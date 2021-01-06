@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const dataSchema = new mongoose.Schema({
   terminalName:{
-    type:String, 
+    type:String,
     required : [true, 'missing terminalName']
   },
   data:{
@@ -9,7 +9,7 @@ const dataSchema = new mongoose.Schema({
     type:Object
   }
 }, {timestamps: true});
-const Device = mongoose.model('device', dataSchema );
+const Device = mongoose.model('device-config', dataSchema );
 
 module.exports = {
   Device
