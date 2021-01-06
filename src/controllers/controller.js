@@ -3,6 +3,7 @@ const {validate} = require('../validators/inputValidator');
 const {convert} = require('../../src/converter');
 const {Device} = require('../models/schema');
 const {jsonStructure} = require('../DeviceConfigfile');
+
 const post = async (req, res)=>{
   try {
     validateRequest(req);
@@ -14,34 +15,47 @@ const post = async (req, res)=>{
     const result = await device.save();
     res.status(201).send(result);  
   }  catch (e) {
-    res.status(400).send(handelErrors(e));  
+    res.status(400).send(handleErrors(e));
   }
 };
 
-const get = (req, res) => {
+const getDevices = async (req, res) => {
   try {
-    Device.find()
-      .then(result => {
-        res.send(result);
-      });
+    const result = await Device.find();
+    res.send(result);
   } catch (e) {
-    res.status(400).send(e.message);
+    res.status(400).send(handleErrors(e));
   }
 };
 
-module.exports = {
-  post,
-  get
+const getOneDevice = async (req, res)=>{
+  try {
+    const result = await Device.findOne({
+      _id:req.params.id
+    });
+    if (result === null) {
+      throw new Error('the device-config does not exist.');
+    }
+    res.send(result);
+  } catch (e) {
+    res.status(400).send(handleErrors(e));
+  }
 };
-    
-function handelErrors(e) {
+
+function handleErrors(e) {
   let err = '';
   if (e.errors) {
     Object.values(e.errors).forEach(({properties})=>{
       err =  properties.message;
     });
-  } else { 
+  } else {
     err = e.message;
   }
   return err;
 }
+
+module.exports = {
+  post,
+  getDevices,
+  getOneDevice
+};
