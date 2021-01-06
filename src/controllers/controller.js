@@ -42,20 +42,20 @@ const getOneDevice = async (req, res)=>{
   }
 };
 
-module.exports = {
-  post,
-  get,
-  getOneDevice
-};
-    
 function handelErrors(e) {
   let err = '';
   if (e.errors) {
     Object.values(e.errors).forEach(({properties})=>{
       err =  properties.message;
     });
-  } else { 
+  } else {
     err = e.message;
   }
   return err;
 }
+
+module.exports = {
+  post,
+  get,
+  getOneDevice
+};
