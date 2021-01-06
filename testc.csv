@@ -1,11 +1,3 @@
 DCS Controller,OPC Tag,DeviceType,EMFLOC,CM FLOC,Type of measurement,MeasurementMethod,TagUnitOfMeasure,MeasurementSpecification,External line
 FCS1121,T_FQR9321860.PV,pipeline,VPL19,FQR-932-18-60,flowrate,sum,MQH,,VPL19
 FCS1106,T_PT9321860.PV,pipeline,VPL19,PT-932-18-60,pressure,max,BARG,,VPL19
-FCS1121,T_PMP9321901.PV,pump,T_PMP9321901,XI-932-19-01,state,abs,,2 = RUN / 0 = STOP,VPL19
-FCS1121,T_PMP9322001.PV,pump,T_PMP9322001,XI-932-20-01,state,abs,,2 = RUN / 0 = STOP,VPL19
-FCS1103,T_FIC5910101.PV,flow transmitter,VPL16,FIC-591-01-01,flowrate,sum,MQH,,VPL16
-FCS1103,T_LPT5910101.PV,pipeline,VPL16,PT-591-01-01,pressure,max,BAR,,VPL16
-FCS1103,T_LTT5910101.PV,pipeline,VPL16,LTT-591-01-01,temperature,avg,CEL,,VPL16
-FCS1103,T_LTT5910102.PV,pipeline,VPL16,LTT-591-01-02,temperature,avg,CEL,,VPL16
-FCS1103,T_PT3125002.PV,pump,T_EM_PM31250,PT-312-50-02,pressure,max,barg,,VPL16
-FCS1103,T_PMP3125001.PV,pump,T_EM_PM31250,PMP-312-50-01,state,abs,,2 = RUN / 0 = STOP,VPL16

@@ -13,7 +13,7 @@ function validateFileParameter(req) {
 }
 
 function validateTerminalName(req) {
-  if (req.body === undefined || req.body.terminalName === undefined || (typeof req.body.terminalName !== 'string')) {
+  if (req.body === undefined || req.body.terminalName === undefined ||  (typeof req.body.terminalName !== 'string')) {
     throw new Error('request body.terminalName invalid or missing. Should be a string.');
   }
 }

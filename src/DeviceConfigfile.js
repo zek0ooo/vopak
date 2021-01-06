@@ -1,4 +1,5 @@
-function jsonStructure(inputData) {
+function jsonStructure(convertedData) {
+  const {inputData, terminalName} = convertedData;
   const devices = [];
   inputData.forEach(dataRow => {
     createTag(dataRow);
@@ -6,7 +7,7 @@ function jsonStructure(inputData) {
   function createDevice(data) {
     const device = {};
     device.DeviceName = data.EMFLOC;
-    device.DeviceLocation ='';
+    device.DeviceLocation = terminalName;
     device.DeviceId = data.EMFLOC;
     device.DeviceType = data.DeviceType;
     device.EM_FLOC = data.EMFLOC;
