@@ -1,27 +1,27 @@
-const {validateRequest} = require('../validators/requestValidator');
-const {validate} = require('../validators/inputValidator');
-const {convert} = require('../../src/converter');
-const {Device} = require('../models/schema');
-const {jsonStructure} = require('../DeviceConfigfile');
+const requestValidator = require('../validators/requestValidator');
+const inputValidator = require('../validators/inputValidator');
+const converter = require('../../src/converter');
+const schema = require('../models/schema');
+const DeviceConfigfile = require('../DeviceConfigfile');
 
 const post = async (req, res)=>{
   try {
-    validateRequest(req);
-    const inputData = convert(req.files.data.data.toString().trim());
-    validate(inputData);
+    requestValidator.validateRequest(req);
+    const inputData = converter.convert(req.files.data.data.toString().trim());
+    inputValidator.validate(inputData);
     const terminalName = req.body.terminalName.trim();
-    const ConfigFile = jsonStructure({inputData, terminalName : terminalName});
-    const device = new Device({terminalName : terminalName, data : ConfigFile});
+    const ConfigFile = DeviceConfigfile.jsonStructure({inputData, terminalName : terminalName});
+    const device = new schema.Device({terminalName : terminalName, data : ConfigFile});
     const result = await device.save();
-    res.status(201).send(result);  
-  }  catch (e) {
+    res.status(201).send(result);
+  } catch (e) {
     res.status(400).send(handleErrors(e));
   }
 };
 
 const getDevices = async (req, res) => {
   try {
-    const result = await Device.find();
+    const result = await schema.Device.find();
     res.send(result);
   } catch (e) {
     res.status(400).send(handleErrors(e));
@@ -30,7 +30,7 @@ const getDevices = async (req, res) => {
 
 const getOneDevice = async (req, res)=>{
   try {
-    const result = await Device.findOne({
+    const result = await schema.Device.findOne({
       _id:req.params.id
     });
     if (result === null) {
