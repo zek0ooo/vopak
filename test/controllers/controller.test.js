@@ -1,64 +1,95 @@
-// const { expect } = require('chai');
-// const post = require('../../src/controllers/controller');
-describe('controller test', ()=>{
-  // it('shoule return request status 201', ()=>{
-  //   const req = {
-  //     body : {
-  //       terminalName : 'test'
-  //     },
-  //     files : {
-  //       data : {
-  //         mimetype : 'text/csv',
-  //         data : new Buffer.from( 'DCS Controller,OPC Tag,DeviceType,EMFLOC,CM FLOC,Type of measurement,MeasurementMethod,TagUnitOfMeasure,MeasurementSpecification,External line\r\nFCS1121,T_FQR9321860.PV,pipeline,VPL19,FQR-932-18-60,flowrate,sum,MQH,,VPL19\r\nFCS1106,T_PT9321860.PV,pipeline,VPL19,PT-932-18-60,pressure,max,BARG,,VPL19\r\nFCS1121,T_PMP9321901.PV,pump,T_PMP9321901,XI-932-19-01,state,abs,,2 = RUN / 0 = STOP,VPL19'
-  //         )
-  //       }
-  //     }
-  //   };
-  //   const res = {
-  //     socket : {
-  //       _httpMessage : {
-  //         req : {
-  //           res : {
-  //             statusCode : 201
-  //           }
-  //         }
-  //       }
-  //     }
-  //   };
-  //   expect(
-  //     post(req, res)
-  //   ).to.be(res.socket._httpMessage.req.res.statusCode === 201);
-  //   // console.log(res.socket._httpMessage.req.res.statusCode);
+const chai = require('chai');
+const sinon = require('sinon');
+const sinonChai = require('sinon-chai');
+const { mockReq, mockRes } = require('sinon-express-mock');
+
+const requestValidator = require('../../src/validators/requestValidator');
+const inputValidator = require('../../src/validators/inputValidator');
+const converter = require('../../src/converter');
+const schema = require('../../src/models/schema');
+const DeviceConfigfile = require('../../src/DeviceConfigfile');
+
+const controller = require('../../src/controllers/controller');
+
+chai.use(sinonChai);
+
+describe('controller test', () => {
+  beforeEach(() => {
+    sinon.stub(converter, "convert").returns({});
+    sinon.stub(DeviceConfigfile, "jsonStructure").returns({Devices: [{EM_FLOC: 'emFlocTest', tags: [{CM_FLOW: 'cmFlocTest'}]}]});
+    const deviceSaveStub = sinon.stub().returns({_id: 'i-am-an-id'});
+    sinon.stub(schema, "Device").returns({save: deviceSaveStub});
+  });
+  afterEach(() => {
+    sinon.restore();
+  });
+
+  it ('should return a 400 if an error is thrown in the requestValidator', async () => {
+    const req = mockReq(request);
+    const res = mockRes();
+
+    const errorMessage = "ValidateRequest validation error";
+    const error = new Error(errorMessage);
+
+    sinon.stub(requestValidator, "validateRequest").throws(error);
+
+    await controller.post(req, res);
+
+    chai.expect(res.status).to.be.calledWith(400);
+    chai.expect(res.send).to.be.calledWith(errorMessage);
+  });
+
+  it ('should return a 400 if an error is thrown in the inputValidator', () => {
+    const req = mockReq(request);
+    const res = mockRes();
+
+    const errorMessage = "InputValidator validation error";
+    const error = new Error(errorMessage);
+
+    sinon.stub(requestValidator, "validateRequest");
+    sinon.stub(inputValidator, "validate").throws(error);
+    controller.post(req, res);
+
+    chai.expect(res.status).to.be.calledWith(400);
+    chai.expect(res.send).to.be.calledWith(errorMessage);
+  });
+
+  // it ('should return a 400 if an error is thrown in the inputValidator', async () => {
+  //   const req = mockReq({});
+  //   const res = mockRes();
+  //
+  //   sinon.stub(inputValidator, "validate").throws("Validation error");
+  //   await controller.post(req, res);
+  //
+  //   chai.expect(res.status).to.be.calledWith(400);
   // });
 
-  // it('shoule return request status 400', ()=>{
-  //   const req = {
-  //     body : {
-  //       terminalName : 'test'
-  //     },
-  //     files : {
-  //       data : {
-  //         mimetype : ' ',
-  //         data : new Buffer.from( 'DCS Controller,OPC Tag,DeviceType,EMFLOC,CM FLOC,Type of measurement,MeasurementMethod,TagUnitOfMeasure,MeasurementSpecification,External line\r\nFCS1121,T_FQR9321860.PV,pipeline,VPL19,FQR-932-18-60,flowrate,sum,MQH,,VPL19\r\nFCS1106,T_PT9321860.PV,pipeline,VPL19,PT-932-18-60,pressure,max,BARG,,VPL19\r\nFCS1121,T_PMP9321901.PV,pump,T_PMP9321901,XI-932-19-01,state,abs,,2 = RUN / 0 = STOP,VPL19'
-  //         )
-  //       }
-  //     }
-  //   };
-  //   const res = {
-  //     socket : {
-  //       _httpMessage : {
-  //         req : {
-  //           res : {
-  //             statusCode : 400
-  //           }
-  //         }
-  //       }
-  //     }
-  //   };
-  //   expect( function () { 
-  //     post(req, res);
-  //   } ).to.Throw('request files.data invalid or missing. Should be a CSV file.');
-  //   // .to.be(res.socket._httpMessage.req.res.statusCode === 201);
-  //   // console.log(res.socket._httpMessage.req.res.statusCode);
-  // });
+  it ('should return a 201 if no errors are thrown in the business logic functions', async () => {
+    const req = mockReq(request);
+    const res = mockRes();
+
+    sinon.stub(requestValidator, "validateRequest");
+    sinon.stub(inputValidator, "validate");
+
+    // const deviceOutput = {};
+
+    await controller.post(req, res);
+
+    // chai.expect(res.status).to.be.calledWith(201);
+    chai.expect(res.send).to.be.calledWith({_id: 'i-am-an-id'});
+  });
 });
+
+const request = {
+  body: {
+    terminalName: 'testTerminalName',
+  },
+  files: {
+    data: {
+      data: [
+        "header1,header2",
+        "row1,row2"
+      ].join("\n")
+    }
+  }
+};
