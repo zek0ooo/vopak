@@ -17,9 +17,11 @@ describe('controller test', () => {
   beforeEach(() => {
     sinon.stub(converter, "convert").returns({});
     sinon.stub(DeviceConfigfile, "jsonStructure").returns({Devices: [{EM_FLOC: 'emFlocTest', tags: [{CM_FLOW: 'cmFlocTest'}]}]});
-    const deviceSaveStub = sinon.stub().returns({_id: 'i-am-an-id'});
+
+    const deviceSaveStub = sinon.stub().resolves({_id: 'i-am-an-id'});
     sinon.stub(schema, "Device").returns({save: deviceSaveStub});
   });
+
   afterEach(() => {
     sinon.restore();
   });
@@ -54,16 +56,6 @@ describe('controller test', () => {
     chai.expect(res.send).to.be.calledWith(errorMessage);
   });
 
-  // it ('should return a 400 if an error is thrown in the inputValidator', async () => {
-  //   const req = mockReq({});
-  //   const res = mockRes();
-  //
-  //   sinon.stub(inputValidator, "validate").throws("Validation error");
-  //   await controller.post(req, res);
-  //
-  //   chai.expect(res.status).to.be.calledWith(400);
-  // });
-
   it ('should return a 201 if no errors are thrown in the business logic functions', async () => {
     const req = mockReq(request);
     const res = mockRes();
@@ -71,11 +63,9 @@ describe('controller test', () => {
     sinon.stub(requestValidator, "validateRequest");
     sinon.stub(inputValidator, "validate");
 
-    // const deviceOutput = {};
-
     await controller.post(req, res);
 
-    // chai.expect(res.status).to.be.calledWith(201);
+    chai.expect(res.status).to.be.calledWith(201);
     chai.expect(res.send).to.be.calledWith({_id: 'i-am-an-id'});
   });
 });
