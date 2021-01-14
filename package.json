@@ -19,6 +19,7 @@
   },
   "homepage": "https://gitlab.com/vopak/deviceconfig-project/device-config-api#readme",
   "dependencies": {
+    "@okta/okta-sdk-nodejs": "^4.4.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.0",
     "json2csv": "^5.0.5",
