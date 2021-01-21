@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "nyc --reporter=html --reporter=text --reporter=lcovonly mocha --recursive",
+    "client": "client.js",
     "pretest": "eslint -c .eslintrc .",
     "lint": "eslint  -c .eslintrc ."
   },
@@ -26,7 +27,6 @@
     "express": "^4.17.1",
     "express-fileupload": "^1.2.0",
     "form-data": "^3.0.0",
-    "json2csv": "^5.0.5",
     "mongoose": "^5.11.7",
     "request-promise": "^4.2.6"
   },
