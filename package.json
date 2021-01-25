@@ -5,7 +5,6 @@
   "main": "index.js",
   "scripts": {
     "test": "nyc --reporter=html --reporter=text --reporter=lcovonly mocha --recursive",
-    "client": "client.js",
     "pretest": "eslint -c .eslintrc .",
     "lint": "eslint  -c .eslintrc ."
   },

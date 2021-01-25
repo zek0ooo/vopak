@@ -3,7 +3,6 @@ const oktaJwtVerifier = new OktaJwtVerifier({
   issuer: process.env.OKTA_ISSUER,
   clientId: process.env.OKTA_CLIENT_ID
 });
-//authorization: 'Bearer ' + JWT_RESPONSE;
 module.exports = async (req, res, next) => { 
   try { 
     const { authorization } = req.headers;
