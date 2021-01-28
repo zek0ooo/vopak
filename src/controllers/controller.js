@@ -57,5 +57,5 @@ function handleErrors(e) {
 module.exports = {
   post,
   getDevices,
-  getOneDevice
+  getOneDevice,
 };
